@@ -601,6 +601,26 @@ reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul2
 
 ::========================================================================================================================================
 
+:: Check Smart App Control
+
+set "sacstate="
+if %winbuild% GEQ 22621 (
+for /f "tokens=3" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy" /v VerifiedAndReputablePolicyState %nul6%') do set "sacstate=%%a"
+)
+if defined sacstate (
+if "%sacstate%"=="0x1" (
+call :dk_color %Gray% "Checking Smart App Control State        [Enabled]"
+call :dk_color %Blue% "Smart App Control may prevent you from opening Office after Ohook activation."
+call :dk_color %Blue% "You will need to disable it from the Windows Defender settings if it does."
+) else if "%sacstate%"=="0x2" (
+call :dk_color %Gray% "Checking Smart App Control State        [Evaluation]"
+call :dk_color %Blue% "Smart App Control may prevent you from opening Office in the future if it enables itself after the evaluation period."
+call :dk_color %Blue% "It is recommended that you disable it from the Windows Defender settings."
+)
+)
+
+::========================================================================================================================================
+
 ::  Process Office 15.0 C2R
 
 if not defined o15c2r goto :starto16c2r
