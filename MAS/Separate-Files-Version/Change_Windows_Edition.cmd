@@ -395,7 +395,6 @@ dism.exe
 if not exist %SysPath%\%%# (
 %eline%
 echo [%SysPath%\%%#] file is missing, aborting...
-echo:
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run DISM Restore and SFC Scan options."
 call :dk_color %Blue% "After that, restart system and try activation again."
 echo:
@@ -431,7 +430,6 @@ call :dk_actids 55c92734-d682-4d71-983e-d6ec3f16059f
 if not defined allapps (
 %eline%
 echo Failed to find activation IDs. Aborting...
-echo:
 call :dk_color %Blue% "To fix this issue, activate Windows from the main menu."
 goto dk_done
 )
@@ -453,7 +451,6 @@ if not defined osedition %chkedi% do if not errorlevel 1 (call set "osedition=%%
 if not defined osedition (
 %eline%
 echo Failed to detect OS edition, aborting...
-echo:
 call :dk_color %Blue% "To fix this issue, activate Windows from the main menu."
 goto dk_done
 )
@@ -972,7 +969,6 @@ if %spperror% NEQ 1056 if %spperror% NEQ 0 (
 %eline%
 echo sc start %_slser% [Error Code: %spperror%]
 if %spperror% EQU 1053 (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option and try again."
 call :dk_color %Blue% "If it still does not work, go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 )

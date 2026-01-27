@@ -1165,7 +1165,6 @@ sc query Winmgmt | find /i "STOPPED" %nul% && (
 echo [Successful]
 ) || (
 call :dk_color %Red% "[Failed]"
-echo:
 call :dk_color %Blue% "Its recommended to select [Restart] option and then apply Fix WMI option again."
 echo %line%
 echo:

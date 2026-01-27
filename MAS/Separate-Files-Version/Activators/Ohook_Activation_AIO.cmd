@@ -570,10 +570,9 @@ call :dk_color %Red% "Checking Installed Office               [Not Found]"
 
 if defined ohub (
 echo:
-echo You only have the Office Dashboard app installed. You need to install the full version of Office.
+echo You only have the Office Dashboard app installed; you need to install the full version of Office.
 )
-echo:
-call :dk_color %Blue% "Download and install Office from the below URL and then try again."
+call :dk_color %Blue% "Download and install Office from the URL below, then try again."
 echo:
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -1635,7 +1634,6 @@ if %upk_result%==1 echo Uninstalling Other/Grace Keys           [Successful]
 if %upk_result%==2 (
 call :dk_color %Red% "Uninstalling Other/Grace Keys           [Failed]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 set showfix=1
@@ -1784,7 +1782,6 @@ echo %keyecho% %~1 [Successful]
 call :dk_color %Red% "%keyecho% %~1 [Failed] %keyerror%"
 if not defined showfix (
 if defined altapplist call :dk_color %Red% "Activation ID not found for this key."
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 set showfix=1
@@ -1878,7 +1875,6 @@ if %spperror% NEQ 1056 if %spperror% NEQ 0 (
 %eline%
 echo sc start %_slser% [Error Code: %spperror%]
 if %spperror% EQU 1053 (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option and try again."
 call :dk_color %Blue% "If it still does not work, go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 )
@@ -1973,7 +1969,6 @@ call :dk_chkmal
 sc query Null %nul% || (
 call :dk_color %Red% "Checking Sandboxing                     [Found, script may not work properly]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "If you are using any third-party antivirus, check if it is blocking the script."
 echo:
 )
@@ -1989,7 +1984,6 @@ reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinPE" /v InstRoot 
 
 call :dk_color %Red% "Checking WinPE                          [Found]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "WinPE mode found. Reboot the system and run in normal mode."
 echo:
 )
@@ -2004,7 +1998,6 @@ set showfix=1
 if defined safeboot_option (
 call :dk_color %Red% "Checking Boot Mode                      [%safeboot_option%]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Safe mode found. Reboot the system and run in normal mode."
 echo:
 )
@@ -2023,7 +2016,6 @@ if /i not "%imagestate%"=="IMAGE_STATE_COMPLETE" (
 call :dk_color %Gray% "Checking Windows Setup State            [%imagestate%]"
 echo "%imagestate%" | find /i "RESEAL" %nul% && (
 if not defined showfix (
-echo:
 call :dk_color %Blue% "You need to run it in normal mode in case you are running it in Audit Mode."
 echo:
 )
@@ -2118,7 +2110,6 @@ if not defined showfix (
 echo:
 echo %serv_cste% | findstr /i "ClipSVC sppsvc" %nul% && (
 echo A registry fix has been applied to enable the disabled service.
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 ) || (
 set fixes=%fixes% %mas%in-place_repair_upgrade
@@ -2159,7 +2150,6 @@ if not defined showfix (
 set listwospp=%_serv:sppsvc=%
 echo %serv_e% | findstr /i "!listwospp!" %nul% && (
 set showfix=1
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option and run the script again."
 set fixes=%fixes% %mas%in-place_repair_upgrade
 call :dk_color2 %Blue% "If service error is still not fixed, do this - " %_Yellow% " %mas%in-place_repair_upgrade"
@@ -2191,7 +2181,6 @@ if defined wmifailed (
 call :dk_color %Red% "Checking WMI                            [Not Working]"
 
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run Fix WMI option."
 echo:
 )
@@ -2303,7 +2292,6 @@ if !errorlevel!==3 set "permerror=Error Found In S-1-5-20 SPP"
 if defined permerror (
 call :dk_color %Red% "Checking SPP Permissions                [!permerror!]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 )
@@ -2325,7 +2313,6 @@ if defined chkalp (
 call :dk_color %Red% "Checking WPA Registry Errors            [%wpainfo%]"
 if not defined showfix (
 echo "%wpainfo%" | find /i "Error Found" %nul% && (
-echo:
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 echo:
 set error=1
@@ -2338,7 +2325,6 @@ set wpainfo=a
 if not defined chkalp (
 if %wpainfo% GEQ 5000 (
 call :dk_color %Gray% "Checking WPA Registry Count             [%wpainfo%]"
-echo:
 call :dk_color %Blue% "A large number of WPA registries have been found, which may cause high CPU usage."
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 echo:
@@ -2354,7 +2340,6 @@ echo Checking WPA Registry Count             [%wpainfo%]
 reg query "HKU\S-1-5-20\Software\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\PersistedTSReArmed" %nul% && (
 call :dk_color %Red% "Checking Rearm                          [System is Rearmed]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 echo:
 )
@@ -2366,7 +2351,6 @@ set showfix=1
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ClipSVC\Volatile\PersistedSystemState" %nul% && (
 call :dk_color %Red% "Checking ClipSVC PersistedSystemState   [Found]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 echo:
 )
@@ -2381,7 +2365,6 @@ set showfix=1
 if %error_code% NEQ 0 (
 call :dk_color %Red% "Checking SoftwareLicensingService       [Not Working] [%error_code%]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 call :dk_color %Blue% "If activation still fails then run Fix WPA Registry option."
 echo:
@@ -2411,7 +2394,6 @@ call :dk_color %Gray% "Checking Activation IDs                 [Key Not Installe
 if not defined apps if not defined allapps (
 call :dk_color %Red% "Checking Activation IDs                 [Not found]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 call :dk_color %Blue% "If activation still fails then run Fix WPA Registry option."
 echo:
@@ -2421,7 +2403,6 @@ set showfix=1
 )
 
 if not defined showfix if defined rlicfailed (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 call :dk_color %Blue% "If activation still fails then run Fix WPA Registry option."
 echo:
@@ -2439,7 +2420,6 @@ if not defined notwinact if exist "%SystemRoot%\Servicing\Packages\Microsoft-Win
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul2% | find /i "Eval" %nul1% || (
 call :dk_color %Red% "Checking Eval Packages                  [License swapping found. Non-Eval licenses are installed in Eval Windows]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "License swapping is not the right way to upgrade to the full version. Learn the correct method at the link below."
 set fixes=%fixes% %mas%evaluation_editions
 call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%evaluation_editions"
@@ -2548,7 +2528,6 @@ if defined _sppint (
 echo %_sppint% | find /i "PerfOptions" %nul% && (
 call :dk_color %Red% "Checking SPP Interference In IFEO       [%_sppint% - System might deactivate later]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 )

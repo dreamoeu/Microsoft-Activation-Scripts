@@ -397,7 +397,6 @@ if %_wmic% EQU 0 set "chkedi=for /f "tokens=2 delims==" %%a in ('%psc% "(([WMISE
 if %osedition%==0 (
 %eline%
 echo Failed to detect OS Edition. Aborting...
-echo:
 call :dk_color %Blue% "To fix this issue, activate Windows from the main menu."
 goto dk_done
 )
@@ -434,7 +433,6 @@ if %verchk% LSS 9029 (
 echo Installed Office version is %_version%.
 echo Minimum required version is 16.0.9029.2167
 echo Aborting...
-echo:
 call :dk_color %Blue% "Download and install latest Office from below URL and try again."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -457,7 +455,6 @@ _masterxml
 if not defined %%A (
 %eline%
 echo Failed to find %%A. Aborting...
-echo:
 call :dk_color %Blue% "Download and install Office from below URL and try again."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -809,7 +806,6 @@ if /i "%_lang%"=="%%#" set langmatched=1
 if not defined langmatched (
 %eline%
 echo %_lang% language is not available for Project/Visio apps.
-echo:
 call :dk_color %Blue% "Install Office in the supported language for Project/Visio from the below URL."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -1617,7 +1613,6 @@ if %spperror% NEQ 1056 if %spperror% NEQ 0 (
 %eline%
 echo sc start %_slser% [Error Code: %spperror%]
 if %spperror% EQU 1053 (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option and try again."
 call :dk_color %Blue% "If it still does not work, go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 )
