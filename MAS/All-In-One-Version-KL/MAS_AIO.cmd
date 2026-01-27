@@ -1,5 +1,5 @@
 @::ab7249d77random13141b5922144806de5d43f
-@set masver=3.9
+@set masver=3.10
 @setlocal DisableDelayedExpansion
 @echo off
 
@@ -679,7 +679,6 @@ if %winbuild% LSS 10240 (
 %eline%
 echo Unsupported OS version detected [%winbuild%].
 echo HWID Activation is only supported on Windows 10/11.
-echo:
 call :dk_color %Blue% "Use TSforge activation option from the main menu."
 goto dk_done
 )
@@ -965,7 +964,6 @@ call :dk_color %Red% "Checking Ticket Migration               [Failed]"
 
 if not defined altapplist if not defined showfix if defined rebuildinfo (
 set showfix=1
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 )
@@ -1053,7 +1051,6 @@ reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v DisableWin
 reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v DoNotConnectToWindowsUpdateInternetLocations %nul2% | find /i "0x1" %nul% && set wublock=1
 if defined wublock (
 call :dk_color %Red% "Checking Update Blocker In Registry     [Found]"
-echo:
 call :dk_color %Blue% "HWID activation needs working Windows updates, if you have used any tool to block updates, undo it."
 echo:
 )
@@ -1061,7 +1058,6 @@ echo:
 reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v DisableStoreApps %nul2% | find /i "0x1" %nul% && (
 set storeblock=1
 call :dk_color %Red% "Checking Store Blocker In Registry      [Found]"
-echo:
 call :dk_color %Blue% "If you have used any tool to block Store, undo it."
 echo:
 )
@@ -1085,7 +1081,6 @@ set fixes=%fixes% %mas%remove_mal%w%ware
 call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%remove_mal%w%ware"
 echo:
 ) else (
-echo:
 call :dk_color %Blue% "HWID activation needs working Windows updates, if you have used any tool to block updates, undo it."
 echo:
 )
@@ -1096,7 +1091,6 @@ set error=1
 set wuerror=1
 sc start wuauserv %nul%
 call :dk_color %Red% "Starting Windows Update Service         [Failed] [!errorlevel!]"
-echo:
 call :dk_color %Blue% "HWID activation needs working Windows updates, if you have used any tool to block updates, undo it."
 echo:
 )
@@ -1323,7 +1317,6 @@ echo %keyecho% %~1 [Successful]
 call :dk_color %Red% "%keyecho% %~1 [Failed] %keyerror%"
 if not defined showfix (
 if defined altapplist call :dk_color %Red% "Activation ID not found for this key."
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 set showfix=1
@@ -1465,7 +1458,6 @@ if %spperror% NEQ 1056 if %spperror% NEQ 0 (
 %eline%
 echo sc start %_slser% [Error Code: %spperror%]
 if %spperror% EQU 1053 (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option and try again."
 call :dk_color %Blue% "If it still does not work, go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 )
@@ -1575,7 +1567,6 @@ call :dk_chkmal
 sc query Null %nul% || (
 call :dk_color %Red% "Checking Sandboxing                     [Found, script may not work properly]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "If you are using any third-party antivirus, check if it is blocking the script."
 echo:
 )
@@ -1591,7 +1582,6 @@ reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinPE" /v InstRoot 
 
 call :dk_color %Red% "Checking WinPE                          [Found]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "WinPE mode found. Reboot the system and run in normal mode."
 echo:
 )
@@ -1606,7 +1596,6 @@ set showfix=1
 if defined safeboot_option (
 call :dk_color %Red% "Checking Boot Mode                      [%safeboot_option%]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Safe mode found. Reboot the system and run in normal mode."
 echo:
 )
@@ -1625,7 +1614,6 @@ if /i not "%imagestate%"=="IMAGE_STATE_COMPLETE" (
 call :dk_color %Gray% "Checking Windows Setup State            [%imagestate%]"
 echo "%imagestate%" | find /i "RESEAL" %nul% && (
 if not defined showfix (
-echo:
 call :dk_color %Blue% "You need to run it in normal mode in case you are running it in Audit Mode."
 echo:
 )
@@ -1720,7 +1708,6 @@ if not defined showfix (
 echo:
 echo %serv_cste% | findstr /i "ClipSVC sppsvc" %nul% && (
 echo A registry fix has been applied to enable the disabled service.
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 ) || (
 set fixes=%fixes% %mas%in-place_repair_upgrade
@@ -1761,7 +1748,6 @@ if not defined showfix (
 set listwospp=%_serv:sppsvc=%
 echo %serv_e% | findstr /i "!listwospp!" %nul% && (
 set showfix=1
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option and run the script again."
 set fixes=%fixes% %mas%in-place_repair_upgrade
 call :dk_color2 %Blue% "If service error is still not fixed, do this - " %_Yellow% " %mas%in-place_repair_upgrade"
@@ -1793,7 +1779,6 @@ if defined wmifailed (
 call :dk_color %Red% "Checking WMI                            [Not Working]"
 
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run Fix WMI option."
 echo:
 )
@@ -1905,7 +1890,6 @@ if !errorlevel!==3 set "permerror=Error Found In S-1-5-20 SPP"
 if defined permerror (
 call :dk_color %Red% "Checking SPP Permissions                [!permerror!]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 )
@@ -1927,7 +1911,6 @@ if defined chkalp (
 call :dk_color %Red% "Checking WPA Registry Errors            [%wpainfo%]"
 if not defined showfix (
 echo "%wpainfo%" | find /i "Error Found" %nul% && (
-echo:
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 echo:
 set error=1
@@ -1940,7 +1923,6 @@ set wpainfo=a
 if not defined chkalp (
 if %wpainfo% GEQ 5000 (
 call :dk_color %Gray% "Checking WPA Registry Count             [%wpainfo%]"
-echo:
 call :dk_color %Blue% "A large number of WPA registries have been found, which may cause high CPU usage."
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run Fix WPA Registry option."
 echo:
@@ -1956,7 +1938,6 @@ echo Checking WPA Registry Count             [%wpainfo%]
 reg query "HKU\S-1-5-20\Software\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\PersistedTSReArmed" %nul% && (
 call :dk_color %Red% "Checking Rearm                          [System is Rearmed]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 echo:
 )
@@ -1968,7 +1949,6 @@ set showfix=1
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ClipSVC\Volatile\PersistedSystemState" %nul% && (
 call :dk_color %Red% "Checking ClipSVC PersistedSystemState   [Found]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 echo:
 )
@@ -1983,7 +1963,6 @@ set showfix=1
 if %error_code% NEQ 0 (
 call :dk_color %Red% "Checking SoftwareLicensingService       [Not Working] [%error_code%]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 call :dk_color %Blue% "If activation still fails then run Fix WPA Registry option."
 echo:
@@ -2013,7 +1992,6 @@ call :dk_color %Gray% "Checking Activation IDs                 [Key Not Installe
 if not defined apps if not defined allapps (
 call :dk_color %Red% "Checking Activation IDs                 [Not found]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 call :dk_color %Blue% "If activation still fails then run Fix WPA Registry option."
 echo:
@@ -2023,7 +2001,6 @@ set showfix=1
 )
 
 if not defined showfix if defined rlicfailed (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 call :dk_color %Blue% "If activation still fails then run Fix WPA Registry option."
 echo:
@@ -2041,7 +2018,6 @@ if not defined notwinact if exist "%SystemRoot%\Servicing\Packages\Microsoft-Win
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul2% | find /i "Eval" %nul1% || (
 call :dk_color %Red% "Checking Eval Packages                  [License swapping found. Non-Eval licenses are installed in Eval Windows]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "License swapping is not the right way to upgrade to the full version. Learn the correct method at the link below."
 set fixes=%fixes% %mas%evaluation_editions
 call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%evaluation_editions"
@@ -2097,6 +2073,13 @@ call :dk_color %Red% "Checking License Files                  [Not Found] [%osed
 if not exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-*-%osedition%-*.mum" (
 if not exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-%osedition%Edition*.mum" (
 call :dk_color %Red% "Checking Package Files                  [Not Found] [%osedition%]"
+if not defined showfix (
+set fixes=%fixes% %mas%in-place_repair_upgrade
+call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%in-place_repair_upgrade"
+echo:
+)
+set error=1
+set showfix=1
 )
 )
 )
@@ -2143,7 +2126,6 @@ if defined _sppint (
 echo %_sppint% | find /i "PerfOptions" %nul% && (
 call :dk_color %Red% "Checking SPP Interference In IFEO       [%_sppint% - System might deactivate later]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 )
@@ -2559,7 +2541,6 @@ goto :oh_menu
 cls
 if not defined terminal (
 mode 140, 32
-if exist "%SysPath%\spp\store_test\" mode 140, 32
 %psc% "&{$W=$Host.UI.RawUI.WindowSize;$B=$Host.UI.RawUI.BufferSize;$W.Height=32;$B.Height=300;$Host.UI.RawUI.WindowSize=$W;$Host.UI.RawUI.BufferSize=$B;}" %nul%
 )
 title  Ohook Activation %masver%
@@ -2678,7 +2659,6 @@ if defined ohub (
 echo:
 echo You only have the Office Dashboard app installed. You need to install the full version of Office.
 )
-echo:
 call :dk_color %Blue% "Download and install Office from the below URL and then try again."
 echo:
 set fixes=%fixes% %mas%genuine-installation-media
@@ -2702,6 +2682,26 @@ set winserver=
 reg query "HKLM\SYSTEM\CurrentControlSet\Control\ProductOptions" /v ProductType %nul2% | find /i "WinNT" %nul1% || set winserver=1
 if not defined winserver (
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul2% | find /i "Server" %nul1% && set winserver=1
+)
+
+::========================================================================================================================================
+
+:: Check Smart App Control
+
+set "sacstate="
+if %winbuild% GEQ 22621 (
+for /f "tokens=3" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy" /v VerifiedAndReputablePolicyState %nul6%') do set "sacstate=%%a"
+)
+if defined sacstate (
+if "%sacstate%"=="0x1" (
+call :dk_color %Gray% "Checking Smart App Control State        [Enabled]"
+call :dk_color %Blue% "Smart App Control may prevent you from opening Office after Ohook activation."
+call :dk_color %Blue% "You will need to disable it from the Windows Defender settings if it does."
+) else if "%sacstate%"=="0x2" (
+call :dk_color %Gray% "Checking Smart App Control State        [Evaluation]"
+call :dk_color %Blue% "Smart App Control may prevent you from opening Office in the future if it enables itself after the evaluation period."
+call :dk_color %Blue% "It is recommended that you disable it from the Windows Defender settings."
+)
 )
 
 ::========================================================================================================================================
@@ -3721,7 +3721,6 @@ if %upk_result%==1 echo Uninstalling Other/Grace Keys           [Successful]
 if %upk_result%==2 (
 call :dk_color %Red% "Uninstalling Other/Grace Keys           [Failed]"
 if not defined showfix (
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 set showfix=1
@@ -5084,6 +5083,9 @@ f520e45e-7413-4a34-a497-d2765967d094_Client-ESU-Year1_-%w10EsuEditions%-%w10EsuE
 1043add5-23b1-4afb-9a0f-64343c8f3f8d_Client-ESU-Year2_-%w10EsuEditions%-%w10EsuEditionsLaterAdded%
 83d49986-add3-41d7-ba33-87c7bfb5c0fb_Client-ESU-Year3_-%w10EsuEditions%-%w10EsuEditionsLaterAdded%
 0b533b5e-08b6-44f9-b885-c2de291ba456_Client-ESU-Year6[4-6y]_-%w10EsuEditions%-%w10EsuEditionsLaterAdded%
+REM WindowsServer2016
+91bcac0a-d7d3-4d2b-bd0c-72fed675f01b_Server-ESU-Year3[1-3y]_-ServerDatacenter-ServerDatacenterCore-ServerDatacenterV-ServerDatacenterVCore-ServerStandard-ServerStandardCore-ServerStandardV-ServerStandardVCore-
+4cd0ab30-73a4-4dde-972c-512f05be31df_Server-ESU-Year6[4-6y]_-ServerDatacenter-ServerDatacenterCore-ServerDatacenterV-ServerDatacenterVCore-ServerStandard-ServerStandardCore-ServerStandardV-ServerStandardVCore-
 ) do (
 for /f "tokens=1-3 delims=_" %%A in ("%%#") do (
 echo "%allapps%" | find /i "%%A" %nul1% && (
@@ -5139,7 +5141,7 @@ goto :ts_off
 set esuavail=
 if defined _vis if defined isServer set esuavail=1
 if %winbuild% LEQ 7602 if not defined _vis if not defined isThinpc set esuavail=1
-if %winbuild% GTR 7602 if %winbuild% LSS 10240 if defined isServer set esuavail=1
+if %winbuild% GTR 7602 if %winbuild% LSS 14393 if defined isServer set esuavail=1
 if %winbuild% GEQ 10240 if %winbuild% LEQ 19045 if not defined isServer set esuavail=1
 if %winbuild% EQU 9600 set esuavail=1
 
@@ -12978,7 +12980,6 @@ call :ks_clearstuff
 set error_=9
 echo Failed to completely clear %KS% Cache.
 reg query "HKLM\%SPPk%\%_wApp%" /s %nul2% | findstr /i "127.0.0.2" %nul1% && echo KMS38 activation is locked.
-echo:
 call :dk_color %Blue% "%_fixmsg%"
 echo:
 ) || (
@@ -16804,7 +16805,6 @@ sc query Winmgmt | find /i "STOPPED" %nul% && (
 echo [Successful]
 ) || (
 call :dk_color %Red% "[Failed]"
-echo:
 call :dk_color %Blue% "Its recommended to select [Restart] option and then apply Fix WMI option again."
 echo %line%
 echo:
@@ -17226,7 +17226,6 @@ dism.exe
 if not exist %SysPath%\%%# (
 %eline%
 echo [%SysPath%\%%#] file is missing, aborting...
-echo:
 call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run DISM Restore and SFC Scan options."
 call :dk_color %Blue% "After that, restart system and try activation again."
 echo:
@@ -17262,7 +17261,6 @@ call :dk_actids 55c92734-d682-4d71-983e-d6ec3f16059f
 if not defined allapps (
 %eline%
 echo Failed to find activation IDs. Aborting...
-echo:
 call :dk_color %Blue% "To fix this issue, activate Windows from the main menu."
 goto dk_done
 )
@@ -17284,7 +17282,6 @@ if not defined osedition %chkedi% do if not errorlevel 1 (call set "osedition=%%
 if not defined osedition (
 %eline%
 echo Failed to detect OS edition, aborting...
-echo:
 call :dk_color %Blue% "To fix this issue, activate Windows from the main menu."
 goto dk_done
 )
@@ -18120,7 +18117,6 @@ if %_wmic% EQU 0 set "chkedi=for /f "tokens=2 delims==" %%a in ('%psc% "(([WMISE
 if %osedition%==0 (
 %eline%
 echo Failed to detect OS Edition. Aborting...
-echo:
 call :dk_color %Blue% "To fix this issue, activate Windows from the main menu."
 goto dk_done
 )
@@ -18157,7 +18153,6 @@ if %verchk% LSS 9029 (
 echo Installed Office version is %_version%.
 echo Minimum required version is 16.0.9029.2167
 echo Aborting...
-echo:
 call :dk_color %Blue% "Download and install latest Office from below URL and try again."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -18180,7 +18175,6 @@ _masterxml
 if not defined %%A (
 %eline%
 echo Failed to find %%A. Aborting...
-echo:
 call :dk_color %Blue% "Download and install Office from below URL and try again."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -18532,7 +18526,6 @@ if /i "%_lang%"=="%%#" set langmatched=1
 if not defined langmatched (
 %eline%
 echo %_lang% language is not available for Project/Visio apps.
-echo:
 call :dk_color %Blue% "Install Office in the supported language for Project/Visio from the below URL."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
