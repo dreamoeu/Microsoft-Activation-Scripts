@@ -3381,7 +3381,7 @@ echo Checking WPA Registry Count             [%wpainfo%]
 
 reg query "HKU\S-1-5-20\Software\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\PersistedTSReArmed" %nul% && (
 call :dk_color %Red% "Checking Rearm                          [System is Rearmed]"
-if not defined showfix 
+if not defined showfix (
 call :dk_color %Blue% "Reboot your machine using the restart option to fix this error."
 echo:
 )

@@ -2657,9 +2657,9 @@ call :dk_color %Red% "Checking Installed Office               [Not Found]"
 
 if defined ohub (
 echo:
-echo You only have the Office Dashboard app installed. You need to install the full version of Office.
+echo You only have the Office Dashboard app installed; you need to install the full version of Office.
 )
-call :dk_color %Blue% "Download and install Office from the below URL and then try again."
+call :dk_color %Blue% "Download and install Office from the URL below, then try again."
 echo:
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
@@ -5259,9 +5259,9 @@ call :dk_color %Gray% "Checking Installed Office               [Not Found]"
 
 if defined ohub (
 echo:
-echo You only have the Office Dashboard app installed. You need to install the full version of Office.
+echo You only have the Office Dashboard app installed; you need to install the full version of Office.
 )
-call :dk_color %Blue% "Download and install Office from below URL and try again."
+call :dk_color %Blue% "Download and install Office from the URL below, then try again."
 if %_actwin%==0 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
 goto :ts_act
@@ -12499,9 +12499,9 @@ call :dk_color %Red% "Checking Installed Office               [Not Found]"
 
 if defined ohub (
 echo:
-echo You only have the Office Dashboard app installed. You need to install the full version of Office.
+echo You only have the Office Dashboard app installed; you need to install the full version of Office.
 )
-call :dk_color %Blue% "Download and install Office from below URL and try again."
+call :dk_color %Blue% "Download and install Office from the URL below, then try again."
 set fixes=%fixes% %mas%genuine-installation-media
 call :dk_color %_Yellow% "%mas%genuine-installation-media"
 goto :ks_activate
