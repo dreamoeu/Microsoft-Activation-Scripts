@@ -81,4 +81,4 @@
 ---
 
 Latest Version: 3.10  
-Release date: 19-Nov-2025
+Release date: 28-Jan-2026
